@@ -1,0 +1,266 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   Design tokens. Two hand-tuned palettes — light is not an inversion
+   of dark. Components only ever reference the semantic names below.
+   ------------------------------------------------------------------ */
+:root {
+  color-scheme: light;
+
+  --canvas: #f4f3f8;
+  --sunken: #edebf3;
+  --surface: #ffffff;
+  --raised: #f6f5fa;
+  --overlay: #ffffff;
+
+  --line: #e3e1ec;
+  --line-strong: #cfccdc;
+
+  --fg: #17151f;
+  --muted: #54516a;
+  --subtle: #6c6984;
+
+  --primary: #5a46d4;
+  --primary-hover: #4c39c2;
+  --primary-fg: #ffffff;
+  --accent: #5240c8;
+  --ring: #5a46d4;
+
+  --critical: #c4203a;
+  --high: #b4500a;
+  --medium: #835d00;
+  --low: #5d5b70;
+  --ok: #0b7a5b;
+
+  --shadow-panel: 0 1px 2px rgb(23 21 31 / 0.04), 0 8px 24px -12px rgb(23 21 31 / 0.1);
+  --shadow-pop: 0 24px 64px -16px rgb(23 21 31 / 0.28);
+  --grid-line: rgb(23 21 31 / 0.05);
+  --glow: rgb(90 70 212 / 0.14);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --canvas: #0e0d13;
+  --sunken: #0a090e;
+  --surface: #16151d;
+  --raised: #1d1c26;
+  --overlay: #1a1922;
+
+  --line: #272530;
+  --line-strong: #383544;
+
+  --fg: #eeedf4;
+  --muted: #a8a6b8;
+  --subtle: #8886a1;
+
+  --primary: #6b58e4;
+  --primary-hover: #7a68ee;
+  --primary-fg: #ffffff;
+  --accent: #a99bff;
+  --ring: #a99bff;
+
+  --critical: #ff6e80;
+  --high: #ff9a56;
+  --medium: #f0c050;
+  --low: #a09eb2;
+  --ok: #52d3a8;
+
+  --shadow-panel: 0 1px 0 rgb(255 255 255 / 0.02) inset;
+  --shadow-pop: 0 32px 80px -20px rgb(0 0 0 / 0.7);
+  --grid-line: rgb(255 255 255 / 0.04);
+  --glow: rgb(124 104 240 / 0.2);
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  --color-canvas: var(--canvas);
+  --color-sunken: var(--sunken);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-overlay: var(--overlay);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-fg: var(--primary-fg);
+  --color-accent: var(--accent);
+  --color-accent-soft: color-mix(in oklab, var(--accent) 12%, transparent);
+  --color-ring: var(--ring);
+
+  --color-critical: var(--critical);
+  --color-critical-soft: color-mix(in oklab, var(--critical) 13%, transparent);
+  --color-high: var(--high);
+  --color-high-soft: color-mix(in oklab, var(--high) 13%, transparent);
+  --color-medium: var(--medium);
+  --color-medium-soft: color-mix(in oklab, var(--medium) 14%, transparent);
+  --color-low: var(--low);
+  --color-low-soft: color-mix(in oklab, var(--low) 13%, transparent);
+  --color-ok: var(--ok);
+  --color-ok-soft: color-mix(in oklab, var(--ok) 13%, transparent);
+
+  --shadow-panel: var(--shadow-panel);
+  --shadow-pop: var(--shadow-pop);
+
+  --radius-panel: 14px;
+
+  --animate-arrive: arrive 3.2s ease-out 1;
+  --animate-pulse-dot: pulse-dot 1.8s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+
+  @keyframes arrive {
+    0% {
+      background-color: color-mix(in oklab, var(--accent) 22%, transparent);
+      box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 60%, transparent);
+    }
+    100% {
+      background-color: transparent;
+      box-shadow: inset 0 0 0 1px transparent;
+    }
+  }
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+  @keyframes shimmer {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--primary) 35%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Thin, theme-aware scrollbars for the dashboard's internal scroll areas. */
+@utility scroll-slim {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+/* Blueprint grid used behind the landing hero and CTA. */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+@utility skeleton {
+  border-radius: 6px;
+  background-image: linear-gradient(90deg, var(--raised) 0%, var(--line) 50%, var(--raised) 100%);
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+
+/* Dialog entrance/exit, driven by Radix's data-state attribute. */
+@keyframes ns-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes ns-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes ns-pop-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 10px)) scale(0.98);
+  }
+}
+@keyframes ns-pop-out {
+  to {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 6px)) scale(0.985);
+  }
+}
+@keyframes ns-sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+@keyframes ns-sheet-out {
+  to {
+    transform: translateY(100%);
+  }
+}
+
+.ns-fade[data-state="open"] {
+  animation: ns-fade-in 0.2s ease-out;
+}
+.ns-fade[data-state="closed"] {
+  animation: ns-fade-out 0.15s ease-in;
+}
+.ns-pop[data-state="open"] {
+  animation: ns-pop-in 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ns-pop[data-state="closed"] {
+  animation: ns-pop-out 0.15s ease-in;
+}
+.ns-sheet[data-state="open"] {
+  animation: ns-sheet-in 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ns-sheet[data-state="closed"] {
+  animation: ns-sheet-out 0.2s ease-in;
+}

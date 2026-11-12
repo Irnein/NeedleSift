@@ -59,6 +59,12 @@ The command prints the **Service URL** (`https://triageiq-xxxx.a.run.app`). That
 
 To redeploy after changes, run the same command again.
 
+### The frontend ships in the same container
+
+The `Dockerfile` has a Node build stage that runs `npm run build` in `frontend/` and copies the static export (`out/`) into the image; FastAPI serves it at `/` (landing) and `/dashboard/`. The deploy command above is unchanged, and no Node runtime or second service is needed. The frontend calls `/api/*` on its own origin, so no CORS setup is required.
+
+Frontend development (hot reload, against a local or deployed backend): see `frontend/README.md`.
+
 ## 4. Before the demo (after Member 3's final alerts.json lands)
 
 ```bash
