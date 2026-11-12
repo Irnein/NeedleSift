@@ -1,0 +1,230 @@
+{
+  "e1dbbbf31f00f7f3": {
+    "summary": "A hidden PowerShell command executed on host LAB-PC-07 under user student042 to download an executable file from an external IP address into a public folder.",
+    "severity": "high",
+    "verdict": "true_positive",
+    "confidence": 0.95,
+    "mitre_technique": "T1105 Ingress Tool Transfer",
+    "recommended_actions": [
+      "Isolate host LAB-PC-07 from the network to contain potential malware execution.",
+      "Delete the downloaded file C:\\Users\\Public\\a.exe and terminate any related PowerShell processes on LAB-PC-07.",
+      "Force a password reset for user student042 and check for additional compromised activity."
+    ],
+    "escalate": true
+  },
+  "fb33cb253d3736ff": {
+    "summary": "An external IP address successfully logged into the admin account on host SRV-FILE-01 after 214 failed SSH login attempts.",
+    "severity": "high",
+    "verdict": "true_positive",
+    "confidence": 0.95,
+    "mitre_technique": "T1110.001 Password Guessing",
+    "recommended_actions": [
+      "Block traffic from source IP 198.51.100.77 at the network firewall.",
+      "Terminate all active SSH sessions for user admin on SRV-FILE-01 and reset the account credentials.",
+      "Investigate process execution and authentication logs on SRV-FILE-01 for malicious post-compromise activity."
+    ],
+    "escalate": true
+  },
+  "5e8668f7963ce106": {
+    "summary": "The account student088 registered successful logins from Malaysia and Romania just 20 minutes apart, which indicates a probable account takeover.",
+    "severity": "high",
+    "verdict": "true_positive",
+    "confidence": 0.9,
+    "mitre_technique": "T1078 Valid Accounts",
+    "recommended_actions": [
+      "Revoke all active sessions and force an immediate password reset for user student088.",
+      "Enforce Multi-Factor Authentication (MFA) on the student088 account for all future logins.",
+      "Review recent Entra ID and cloud application logs for user student088 to check for unauthorized activity after 16:20."
+    ],
+    "escalate": true
+  },
+  "5204c7779c32cd25": {
+    "summary": "A known trojan malware was downloaded to a lab computer by student150, and the automated antivirus quarantine attempt failed.",
+    "severity": "critical",
+    "verdict": "true_positive",
+    "confidence": 0.99,
+    "mitre_technique": "T1204 User Execution",
+    "recommended_actions": [
+      "Isolate host LAB-PC-12 from the network immediately.",
+      "Manually delete the malicious file C:\\Users\\student150\\Downloads\\crack_setup.exe.",
+      "Run a full Microsoft Defender scan on LAB-PC-12 to check for further compromise.",
+      "Review student150 account activity for any other suspicious actions."
+    ],
+    "escalate": true
+  },
+  "39554f24e53b8b4c": {
+    "summary": "An unknown program launched by Microsoft Word attempted to steal saved passwords from the web browser on staff computer STAFF-PC-03.",
+    "severity": "critical",
+    "verdict": "true_positive",
+    "confidence": 0.98,
+    "mitre_technique": "T1555.003 Credentials from Password Stores: Credentials from Web Browsers",
+    "recommended_actions": [
+      "Isolate host STAFF-PC-03 from the network immediately.",
+      "Force a password reset for user staff017.",
+      "Investigate the file tmp8821.exe and the Word document that spawned it."
+    ],
+    "escalate": true
+  },
+  "f828ee6481025ec9": {
+    "summary": "Laboratory computer LAB-PC-19 used by student073 is consistently communicating with an external IP address every 60 seconds on a non-standard port, indicating potential command-and-control beaconing.",
+    "severity": "critical",
+    "verdict": "true_positive",
+    "confidence": 0.95,
+    "mitre_technique": "T1071 Application Layer Protocol",
+    "recommended_actions": [
+      "Isolate host LAB-PC-19 from the university network immediately.",
+      "Block destination IP 203.0.113.99 on the firewall.",
+      "Review forensic logs and memory dumps from LAB-PC-19 to identify the executing payload."
+    ],
+    "escalate": true
+  },
+  "1ed00f02589510b7": {
+    "summary": "Ransomware activity was detected on server SRV-SHARE-02, where over 3,000 files were rapidly encrypted and renamed with a .locked extension.",
+    "severity": "critical",
+    "verdict": "true_positive",
+    "confidence": 0.98,
+    "mitre_technique": "T1486 Data Encrypted for Impact",
+    "recommended_actions": [
+      "Immediately isolate host SRV-SHARE-02 from the network to stop the spread of ransomware.",
+      "Disable the compromised user account svc_backup and terminate the malicious process svc_update.exe on SRV-SHARE-02.",
+      "Initiate incident response protocols and assess backup integrity for restoring encrypted data on SRV-SHARE-02."
+    ],
+    "escalate": true
+  },
+  "6dac31dd89a7c22a": {
+    "summary": "A student workstation (LAB-PC-22) conducted a rapid port scan against 1,200 ports across a server subnet within two minutes.",
+    "severity": "medium",
+    "verdict": "true_positive",
+    "confidence": 0.9,
+    "mitre_technique": "T1046 Network Service Discovery",
+    "recommended_actions": [
+      "Contact user student099 or the lab supervisor to determine if port scanning from LAB-PC-22 is part of an approved lab exercise.",
+      "Isolate workstation LAB-PC-22 (10.0.8.44) from the network if the activity is unauthorized.",
+      "Check server subnet traffic logs for any follow-on exploitation or unauthorized connections originating from LAB-PC-22."
+    ],
+    "escalate": true
+  },
+  "1688b56b3876c6cd": {
+    "summary": "A student account experienced 18 failed VPN login attempts within 10 minutes from an external IP address, indicating a potential brute-force or password guessing attempt.",
+    "severity": "medium",
+    "verdict": "true_positive",
+    "confidence": 0.85,
+    "mitre_technique": "T1110 Brute Force",
+    "recommended_actions": [
+      "Check logs on VPN-GW-01 to confirm whether student117 had any successful logins following the failed attempts.",
+      "Inspect VPN-GW-01 logs to determine if external IP 203.0.113.141 is attempting to authenticate against other user accounts.",
+      "Contact user student117 to verify if the login attempts were legitimate and consider enforcing a password reset if compromised."
+    ],
+    "escalate": true
+  },
+  "dd2679f832f77005": {
+    "summary": "An administrative account logged into the domain controller SRV-AD-01 via RDP at 3:12 AM from an unrecognized device without an associated change ticket.",
+    "severity": "high",
+    "verdict": "true_positive",
+    "confidence": 0.85,
+    "mitre_technique": "T1078 Valid Accounts",
+    "recommended_actions": [
+      "Contact user it.admin2 immediately to confirm if the 3:12 AM login to SRV-AD-01 from NEW-DEVICE-99 (10.0.9.200) was legitimate.",
+      "If unconfirmed, revoke active sessions for user it.admin2 and reset the account password.",
+      "Inspect host NEW-DEVICE-99 and source IP 10.0.9.200 for signs of unauthorized access or compromise."
+    ],
+    "escalate": true
+  },
+  "45f65f7d0ca22002": {
+    "summary": "Student user student201 clicked a link in a phishing email and submitted sensitive information on a fake login page.",
+    "severity": "critical",
+    "verdict": "true_positive",
+    "confidence": 0.95,
+    "mitre_technique": "T1566 Phishing",
+    "recommended_actions": [
+      "Force a password reset and revoke all active authentication sessions for user student201.",
+      "Check authentication logs for student201 to detect any successful unauthorized sign-ins following the credential entry.",
+      "Block the phishing domain apu-login.example-verify.test on the web security gateway and email firewall."
+    ],
+    "escalate": true
+  },
+  "ae2a734ed6f35409": {
+    "summary": "User student030 experienced three failed login attempts on workstation LAB-PC-04 before successfully logging in, which is consistent with normal password mistyping.",
+    "severity": "low",
+    "verdict": "false_positive",
+    "confidence": 0.95,
+    "mitre_technique": "None",
+    "recommended_actions": [
+      "Confirm with student030 whether they simply mis typed their password on host LAB-PC-04.",
+      "Close this alert in Splunk SIEM as a false positive user error."
+    ],
+    "escalate": false
+  },
+  "6333ffdf6aed897a": {
+    "summary": "An IT administrator ran an inventory script on IT-PC-01 referencing an approved change ticket.",
+    "severity": "low",
+    "verdict": "false_positive",
+    "confidence": 0.95,
+    "mitre_technique": "None",
+    "recommended_actions": [
+      "Verify change ticket CHG-1042 in the change management system to confirm scheduled IT maintenance by it.admin1.",
+      "Close the alert as a false positive once the change ticket is verified."
+    ],
+    "escalate": false
+  },
+  "11fd89db624a01c0": {
+    "summary": "The Windows Update process (TiWorker.exe) on machine LAB-PC-03 launched a command prompt to execute a standard Windows Update detection command. This is expected system behavior during update activity.",
+    "severity": "low",
+    "verdict": "false_positive",
+    "confidence": 0.95,
+    "mitre_technique": "None",
+    "recommended_actions": [
+      "Verify that routine Windows patching was scheduled on LAB-PC-03 around 01:15 AM.",
+      "Tune or close the suspicious child process detection rule in Microsoft Defender for standard Windows Update binaries."
+    ],
+    "escalate": false
+  },
+  "8509e4e394d563a9": {
+    "summary": " internal vulnerability scanner SCAN-01 performed an authorized routine port scan against the lab subnet using service account svc_nessus.",
+    "severity": "low",
+    "verdict": "false_positive",
+    "confidence": 0.95,
+    "mitre_technique": "None",
+    "recommended_actions": [
+      "Confirm that the scan by svc_nessus on host SCAN-01 corresponds with the standard vulnerability management schedule.",
+      "Verify that host SCAN-01 is restricted to authorized scanner tasks and has not been altered."
+    ],
+    "escalate": false
+  },
+  "e9b8d4a5d7e8d3dc": {
+    "summary": "A large data transfer of 8.1 GB occurred from the backup server SRV-BACKUP-01 to an external IP address overnight, which matches an approved nightly backup schedule.",
+    "severity": "low",
+    "verdict": "false_positive",
+    "confidence": 0.95,
+    "mitre_technique": "None",
+    "recommended_actions": [
+      "Confirm that destination IP 203.0.113.20 belongs to the approved external backup provider.",
+      "Verify that the backup job timing and data volume align with normal operations for SRV-BACKUP-01."
+    ],
+    "escalate": false
+  },
+  "818e759ca985dec6": {
+    "summary": "Microsoft Defender blocked a potentially unwanted game launcher (Presenoker) from running on lab computer LAB-PC-15 for user student064.",
+    "severity": "low",
+    "verdict": "true_positive",
+    "confidence": 0.95,
+    "mitre_technique": "None",
+    "recommended_actions": [
+      "Confirm in Microsoft Defender console that the file on LAB-PC-15 was successfully blocked and quarantined.",
+      "Notify student064 regarding university policy on unapproved software and game launchers if necessary."
+    ],
+    "escalate": false
+  },
+  "16bfc9c536ca63d8": {
+    "summary": "User student110 on host LAB-PC-18 made a DNS request for a domain that resolves to a known legitimate software update distribution network.",
+    "severity": "low",
+    "verdict": "false_positive",
+    "confidence": 0.95,
+    "mitre_technique": "None",
+    "recommended_actions": [
+      "No immediate containment action is required for host LAB-PC-18 as the activity is associated with normal software updates.",
+      "Optionally review update settings or software installed on LAB-PC-18 if domain alerts persist."
+    ],
+    "escalate": false
+  }
+}

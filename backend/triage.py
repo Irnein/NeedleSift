@@ -38,6 +38,9 @@ MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 FALLBACK_MODELS = [m.strip() for m in os.getenv("GEMINI_FALLBACK_MODELS", "").split(",") if m.strip()]
 MAX_CONCURRENT = int(os.getenv("GEMINI_MAX_CONCURRENT", "3"))
 MAX_RETRIES = 2  # per model
+# Give up on a single Gemini call after this many seconds, so a slow or
+# overloaded model can't hang the request (the next fallback is tried instead).
+TIMEOUT_S = float(os.getenv("GEMINI_TIMEOUT", "30"))
 
 DATA_DIR = Path(os.getenv("DATA_DIR", Path(__file__).resolve().parent.parent / "data"))
 CACHE_FILE = DATA_DIR / "triage_cache.json"
@@ -58,7 +61,10 @@ def content_key(alert: Alert) -> str:
 class Triager:
     def __init__(self) -> None:
         api_key = os.getenv("GEMINI_API_KEY")
-        self.client: Optional[genai.Client] = genai.Client(api_key=api_key) if api_key else None
+        self.client: Optional[genai.Client] = (
+            genai.Client(api_key=api_key, http_options=types.HttpOptions(timeout=int(TIMEOUT_S * 1000)))
+            if api_key else None
+        )
         self._sem = asyncio.Semaphore(MAX_CONCURRENT)
         self._cache: Dict[str, TriageVerdict] = {}
         self._load_cache_file()
@@ -98,8 +104,11 @@ class Triager:
             for attempt in range(1, MAX_RETRIES + 1):
                 try:
                     async with self._sem:
-                        resp = await self.client.aio.models.generate_content(
-                            model=model, contents=prompt, config=config
+                        resp = await asyncio.wait_for(
+                            self.client.aio.models.generate_content(
+                                model=model, contents=prompt, config=config
+                            ),
+                            timeout=TIMEOUT_S + 5,  # backstop if the SDK timeout doesn't fire
                         )
                     if model != MODEL:
                         log.info("Served by fallback model %s", model)
@@ -108,13 +117,18 @@ class Triager:
                     return schema.model_validate_json(resp.text)
                 except errors.APIError as exc:
                     last_error = f"Gemini API error {exc.code} on {model}"
-                    log.warning("%s (attempt %d/%d)", last_error, attempt, MAX_RETRIES)
+                    detail = (exc.message or "")[:160]
+                    log.warning("%s (attempt %d/%d) %s", last_error, attempt, MAX_RETRIES, detail)
                     busy = exc.code in (429, 500, 502, 503, 504)
                     if exc.code == 404:
                         break  # model name not available: try the next model
                     if not busy:
                         raise GeminiUnavailable(last_error) from exc  # bad key etc.: stop
-                except Exception as exc:  # malformed output, network blip
+                except asyncio.TimeoutError:
+                    last_error = f"timed out after {TIMEOUT_S:.0f}s on {model}"
+                    log.warning("Gemini %s (attempt %d/%d)", last_error, attempt, MAX_RETRIES)
+                    break  # this model is too slow right now: try the next one
+                except Exception as exc:  # malformed output, network blip, SDK timeout
                     last_error = f"{model}: {exc}"
                     log.warning("Gemini call failed (attempt %d/%d): %s", attempt, MAX_RETRIES, last_error)
                 if attempt < MAX_RETRIES:
