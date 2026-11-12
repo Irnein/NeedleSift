@@ -1,0 +1,110 @@
+[
+  {
+    "alert_id": "ALT-001",
+    "severity": "high",
+    "verdict": "true_positive",
+    "escalate": true
+  },
+  {
+    "alert_id": "ALT-002",
+    "severity": "critical",
+    "verdict": "true_positive",
+    "escalate": true
+  },
+  {
+    "alert_id": "ALT-003",
+    "severity": "critical",
+    "verdict": "true_positive",
+    "escalate": true
+  },
+  {
+    "alert_id": "ALT-004",
+    "severity": "high",
+    "verdict": "true_positive",
+    "escalate": true
+  },
+  {
+    "alert_id": "ALT-005",
+    "severity": "high",
+    "verdict": "true_positive",
+    "escalate": true
+  },
+  {
+    "alert_id": "ALT-006",
+    "severity": "critical",
+    "verdict": "true_positive",
+    "escalate": true
+  },
+  {
+    "alert_id": "ALT-007",
+    "severity": "medium",
+    "verdict": "true_positive",
+    "escalate": false
+  },
+  {
+    "alert_id": "ALT-008",
+    "severity": "medium",
+    "verdict": "true_positive",
+    "escalate": false
+  },
+  {
+    "alert_id": "ALT-009",
+    "severity": "medium",
+    "verdict": "true_positive",
+    "escalate": true
+  },
+  {
+    "alert_id": "ALT-010",
+    "severity": "high",
+    "verdict": "true_positive",
+    "escalate": true
+  },
+  {
+    "alert_id": "ALT-011",
+    "severity": "high",
+    "verdict": "true_positive",
+    "escalate": true
+  },
+  {
+    "alert_id": "ALT-012",
+    "severity": "low",
+    "verdict": "false_positive",
+    "escalate": false
+  },
+  {
+    "alert_id": "ALT-013",
+    "severity": "low",
+    "verdict": "false_positive",
+    "escalate": false
+  },
+  {
+    "alert_id": "ALT-014",
+    "severity": "low",
+    "verdict": "false_positive",
+    "escalate": false
+  },
+  {
+    "alert_id": "ALT-015",
+    "severity": "low",
+    "verdict": "false_positive",
+    "escalate": false
+  },
+  {
+    "alert_id": "ALT-016",
+    "severity": "low",
+    "verdict": "false_positive",
+    "escalate": false
+  },
+  {
+    "alert_id": "ALT-017",
+    "severity": "low",
+    "verdict": "false_positive",
+    "escalate": false
+  },
+  {
+    "alert_id": "ALT-018",
+    "severity": "low",
+    "verdict": "false_positive",
+    "escalate": false
+  }
+]
