@@ -9,3 +9,11 @@ docs/
 tests/
 DEPLOY.md
 env.yaml
+.claude
+
+# Frontend: only sources go into the build stage. Local env files are kept
+# out so the container build always targets its own origin.
+frontend/node_modules
+frontend/.next
+frontend/out
+frontend/.env*
