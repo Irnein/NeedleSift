@@ -121,7 +121,7 @@ Open http://localhost:8080. Deployment to Cloud Run is covered in [`DEPLOY.md`](
 
 ```
 backend/    FastAPI app, Gemini prompts, triage and caching logic
-frontend/   Dashboard (HTML + JavaScript + Tailwind)
+frontend/   Landing page + dashboard (Next.js, React, Tailwind; static export served by the backend)
 data/       Synthetic alerts, answer key, pre-computed triage cache
 tests/      Accuracy test and results
 Dockerfile  One container for API + dashboard
